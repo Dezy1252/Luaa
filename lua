@@ -1,22 +1,21 @@
--- Function to multiply player's Exp by 1000
-function multiplyExp(player)
+-- Function to increase player's speed by 50x
+function increaseSpeed(player)
     -- Wait for character to load
     player.CharacterAdded:Connect(function(character)
-        -- Assuming 'Exp' is an IntValue under the player's character
-        local exp = character:WaitForChild("Exp")
-        if exp then
-            exp.Changed:Connect(function()
-                exp.Value = exp.Value * 1000
-                print("Player's Exp increased to " .. exp.Value)
-            end)
+        -- Check if character has a Humanoid component
+        local humanoid = character:WaitForChild("Humanoid")
+        if humanoid then
+            -- Increase WalkSpeed by 50 times
+            humanoid.WalkSpeed = humanoid.WalkSpeed * 50
+            print("Player's speed increased to " .. humanoid.WalkSpeed)
         else
-            print("Error: Exp not found")
+            print("Error: Humanoid not found")
         end
     end)
 end
 
 -- Connect the function to the PlayerAdded event
 game.Players.PlayerAdded:Connect(function(player)
-    -- Call the multiplyExp function when the player is added
-    multiplyExp(player)
+    -- Call the increaseSpeed function when the player is added
+    increaseSpeed(player)
 end)
